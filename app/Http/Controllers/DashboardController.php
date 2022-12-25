@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index()
+    /*redirect admin and user*/
+    public function redirect()
     {
         if(Auth::id())
         {
             if(Auth::user()->role == '0')
             {
-                return 'user';
+                return view('home.home');
             }else
             {
                 return view('admin.dashboard');
@@ -23,4 +24,11 @@ class DashboardController extends Controller
             return redirect()->back();
         }
     }
+    /*show index view*/
+    public function index()
+    {
+        return view('home.home');
+    }
+
+
 }

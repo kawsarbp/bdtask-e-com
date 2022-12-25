@@ -85,13 +85,24 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;"  class="{{--{{ request()->routeIs('index') ?'active':'' }} {{ request()->routeIs('create') ?'active':'' }}--}}" >
+                    <a href="javascript:;"  class="{{ request()->routeIs('category.index') ?'active':'' }} {{ request()->routeIs('category.create') ?'active':'' }}" >
                         <i class="fa fa-laptop"></i>
-                        <span>Doctor</span>
+                        <span>Category</span>
                     </a>
                     <ul class="sub">
-                        <li class=""><a href="">Add Doctor</a></li>
-                        <li class="" ><a href="">Manage Doctors</a></li>
+                        <li class="{{ request()->routeIs('category.create') ?'active':'' }}"><a href="{{ route('category.create') }}">Add Category</a></li>
+                        <li class="{{ request()->routeIs('category.index') ?'active':'' }}" ><a href="{{ route('category.index') }}">Manage Category</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;"  class="{{ request()->routeIs('product.index') ?'active':'' }} {{ request()->routeIs('product.create') ?'active':'' }}" >
+                        <i class="fa fa-laptop"></i>
+                        <span>Product</span>
+                    </a>
+                    <ul class="sub">
+                        <li class="{{ request()->routeIs('product.create') ?'active':'' }}"><a href="{{ route('product.create') }}">Add Product</a></li>
+                        <li class="{{ request()->routeIs('product.index') ?'active':'' }}" ><a href="{{ route('product.index') }}">Manage Product</a></li>
                     </ul>
                 </li>
 
