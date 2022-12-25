@@ -29,7 +29,7 @@
 @include('home.inc.header')
 
 
-<div class="container py-5" style="min-height: 400px;">
+<div class="container py-5" style="min-height: 500px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
@@ -59,7 +59,13 @@
                 </table>
             </div>
             <div class="text-right text-success">Total Price: <strong class="text-info">${{ $totalPrice }}</strong></div>
-
+            <div class="text-center text-info">
+                <h3 class="">Proceed To Cart</h3>
+                <div>
+                    <a href="{{ route('cashOnDelivery') }}" class="btn  btn-primary">Cash On Delivery</a>
+                    <a href="{{ route('stripe',base64_encode($totalPrice)) }}" class="btn btn-primary">Pay Using Card</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

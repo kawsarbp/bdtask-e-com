@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +19,11 @@ Route::get('/product-details/{ud}',[ProductController::class,'productDetails'])-
 Route::post('/add-to-cart/{id}',[ProductController::class,'addToCart'])->name('addToCart');
 Route::get('/show-cart',[ProductController::class,'showCart'])->name('showCart');
 Route::get('/remove-cart/{id}',[ProductController::class,'removeCart'])->name('removeCart');
-
+/*cash on delivery routes*/
+Route::get('/cash-on-delivery',[OrderController::class,'cashOnDelivery'])->name('cashOnDelivery');
+/*useing card delivery routes*/
+Route::get('/card-on-delivery/{totalPrice}',[OrderController::class,'stripe'])->name('stripe');
+Route::post('/stripe-payment/{totalPrice}',[PaymentController::class,'stripePost'])->name('stripe.post');
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {

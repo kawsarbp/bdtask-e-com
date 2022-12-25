@@ -130,7 +130,7 @@ class ProductController extends Controller
             $product->product_quantity = $product->product_quantity - $request->quantity;
             $product->save();
 
-            return redirect()->back()->with(['type' => 'success', 'message' => 'Add to cart success']);
+            return redirect()->route('showCart')->with(['type' => 'success', 'message' => 'Add to cart success']);
 
 
         } else {
