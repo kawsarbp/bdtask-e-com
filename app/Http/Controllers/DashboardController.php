@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,8 @@ class DashboardController extends Controller
         {
             if(Auth::user()->role == '0')
             {
-                return view('home.home');
+                $products = Product::where('status','active')->simplePaginate(9);
+                return view('home.home',compact('products'));
             }else
             {
                 return view('admin.dashboard');
@@ -27,7 +29,15 @@ class DashboardController extends Controller
     /*show index view*/
     public function index()
     {
-        return view('home.home');
+        if(Auth::id())
+        {
+            return redirect()->route('dashboard');
+        }
+        else{
+            $products = Product::where('status','active')->simplePaginate(9);
+            return view('home.home',compact('products'));
+        }
+
     }
 
 
