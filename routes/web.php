@@ -51,6 +51,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' 
         Route::get('/',[OrderController::class,'order'])->name('order');
         Route::get('/delivered/{id}',[OrderController::class,'delivered'])->name('delivered');
         Route::get('/pdf/{id}',[OrderController::class,'pdf'])->name('pdf');
+        Route::get('/mailView/{id}',[OrderController::class,'mailView'])->name('mailView');
+        Route::post('/mail/{id}',[OrderController::class,'mail'])->name('mail');
     });
 
 

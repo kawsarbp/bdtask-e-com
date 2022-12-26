@@ -46,7 +46,8 @@
                                 @else
                                     <div class="text-success">Delivered</div>
                                 @endif
-                                    <a href="{{ route('order.pdf',$order->id) }}" class="btn btn-primary btn-sm">Print Pdf</a>
+                                    <a href="{{ route('order.pdf',$order->id) }}" class="btn btn-success btn-sm">Print Pdf</a>
+                                    <a href="{{ route('order.mailView',$order->id) }}" class="btn btn-primary btn-sm">Mail</a>
                             </td>
                         </tr>
                     @endforeach

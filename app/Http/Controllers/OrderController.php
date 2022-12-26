@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,42 @@ class OrderController extends Controller
         $order = Order::find($id);
         $pdf = PDF::loadView('admin.pdf.pdf', compact('order'));
         return $pdf->download('details.pdf');
+    }
+
+    /*mailView*/
+    public function mailView($id)
+    {
+        $order = Order::find($id);
+        if ($order) {
+            return view('admin.email.email',compact('order'));
+        } else {
+            return redirect()->back();
+        }
+    }
+    /*mail*/
+    public function mail(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $email = $order->email;
+        $status = $order->payment_status;
+        $data = [
+            'greeting'=>$request->greeting,
+            'subject'=>$request->subject,
+            'text'=>$request->message,
+            'status'=> $status,
+            'email'=>$email
+        ];
+
+
+        $user['to'] = $email;
+        $user['subject'] = $data['subject'];
+        Mail::send('admin.email.send-mail',$data,function ($message) use ($user){
+            $message->to($user['to']);
+            $message->subject($user['subject']);
+        });
+
+        return redirect()->back()->with(['message'=>'Mail send success','type'=>'success']);
+
     }
 
 
