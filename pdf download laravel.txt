@@ -1,0 +1,15 @@
+		PDF download in laravel
+
+1. composer require barryvdh/laravel-dompdf
+
+2. go to config/app.php
+
+'providers'=>[
+
+Barryvdh\DomPDF\ServiceProvider::class,
+],
+
+'aliases'=>[
+
+'PDF'=>Barryvdh\DomPDF\Facade::class,
+]
