@@ -85,7 +85,7 @@
                 </li>
                 <li>
                     <a class="{{ request()->routeIs('order.order') ?'active':'' }} " href="{{ route('order.order') }}">
-                        <i class="fa fa-dashboard"></i>
+                        <i class="fa  fa-share"></i>
                         <span>Order</span>
                     </a>
                 </li>
@@ -103,7 +103,7 @@
 
                 <li class="sub-menu">
                     <a href="javascript:;"  class="{{ request()->routeIs('product.index') ?'active':'' }} {{ request()->routeIs('product.create') ?'active':'' }}" >
-                        <i class="fa fa-laptop"></i>
+                        <i class="fa fa-external-link"></i>
                         <span>Product</span>
                     </a>
                     <ul class="sub">
