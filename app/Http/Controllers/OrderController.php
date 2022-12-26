@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class OrderController extends Controller
 {
@@ -44,9 +46,38 @@ class OrderController extends Controller
     /*card on delivery*/
     public function stripe($totalPrice)
     {
-         $totalPrice = base64_decode($totalPrice);
+        $totalPrice = base64_decode($totalPrice);
 
-        return view('home.payment.stripe',compact('totalPrice'));
+        return view('home.payment.stripe', compact('totalPrice'));
+    }
+
+    /*order function*/
+    public function order()
+    {
+        $orders = Order::orderBy('id', 'desc')->get();
+        return view('admin.order.order', compact('orders'));
+    }
+
+    /*delivered*/
+    public function delivered($id)
+    {
+        $order = Order::find($id);
+        if ($order) {
+            $order->delivery_status = 'Delivered';
+            $order->payment_status = 'Paid';
+            $order->save();
+            return redirect()->back()->with(['type' => 'success', 'message' => 'Order Delivered success']);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    /*pdf*/
+    public function pdf($id)
+    {
+        $order = Order::find($id);
+        $pdf = PDF::loadView('admin.pdf.pdf', compact('order'));
+        return $pdf->download('details.pdf');
     }
 
 

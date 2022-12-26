@@ -45,9 +45,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' 
         Route::delete('/delete/{id}',[ProductController::class,'destroy'])->name('destroy');
         Route::get('/edit/{id}',[ProductController::class,'edit'])->name('edit');
         Route::post('/edit/{id}',[ProductController::class,'update'])->name('update');
-
-
     });
+    /*Order routes*/
+    Route::prefix('/order')->name('order.')->group(function (){
+        Route::get('/',[OrderController::class,'order'])->name('order');
+        Route::get('/delivered/{id}',[OrderController::class,'delivered'])->name('delivered');
+        Route::get('/pdf/{id}',[OrderController::class,'pdf'])->name('pdf');
+    });
+
 
 
 });

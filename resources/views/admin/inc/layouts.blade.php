@@ -83,6 +83,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a class="{{ request()->routeIs('order.order') ?'active':'' }} " href="{{ route('order.order') }}">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Order</span>
+                    </a>
+                </li>
 
                 <li class="sub-menu">
                     <a href="javascript:;"  class="{{ request()->routeIs('category.index') ?'active':'' }} {{ request()->routeIs('category.create') ?'active':'' }}" >

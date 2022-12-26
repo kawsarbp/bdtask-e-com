@@ -1,5 +1,5 @@
 @extends('admin.inc.layouts')
-@section('title','Manage Category')
+@section('title','Add Category')
 
 @section('main-contant')
 
