@@ -23,6 +23,9 @@
                         <a class="nav-link" href="">Contact</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('orders') }}">Order</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('showCart') }}">Cart</a>
                     </li>
                     @if(Route::has('login'))

@@ -24,6 +24,9 @@ Route::get('/cash-on-delivery',[OrderController::class,'cashOnDelivery'])->name(
 /*useing card delivery routes*/
 Route::get('/card-on-delivery/{totalPrice}',[OrderController::class,'stripe'])->name('stripe');
 Route::post('/stripe-payment/{totalPrice}',[PaymentController::class,'stripePost'])->name('stripe.post');
+/*order page routes*/
+Route::get('/orders',[OrderController::class,'orders'])->name('orders');
+Route::get('/cancel-order/{id}',[OrderController::class,'cancelOrder'])->name('cancelOrder');
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {

@@ -108,29 +108,46 @@ class ProductController extends Controller
     {
         if (Auth::id()) {
             $user = Auth::user();
+            $user_id = $user->id;
             $product = Product::find($id);
-            $cart = new Cart;
 
-            $cart->user_id = $user->id;
-            $cart->product_id = $product->id;
-            $cart->name = $user->name;
-            $cart->email = $user->email;
-            $cart->phone = $user->phone;
-            $cart->address = $user->address;
-            $cart->product_name = $product->product_name;
-            if ($product->discount_price) {
-                $cart->product_price = $product->discount_price * $request->quantity;
-            } else {
-                $cart->product_price = $product->product_price * $request->quantity;
+
+
+            $cart = Cart::where('product_id',$id)->where('user_id',$user_id)->first();
+//            return Cart::find($product_exist_id);
+            if($cart)
+            {
+                $quantity = $cart->product_quantity;
+                $cart->product_quantity = $quantity + $request->quantity;
+                
+                $cart->save();
+                return redirect()->route('showCart')->with(['type' => 'success', 'message' => 'Add to cart success']);
+
+            }else{
+                $cart = new Cart;
+
+                $cart->user_id = $user->id;
+                $cart->product_id = $product->id;
+                $cart->name = $user->name;
+                $cart->email = $user->email;
+                $cart->phone = $user->phone;
+                $cart->address = $user->address;
+                $cart->product_name = $product->product_name;
+                if ($product->discount_price) {
+                    $cart->product_price = $product->discount_price * $request->quantity;
+                } else {
+                    $cart->product_price = $product->product_price * $request->quantity;
+                }
+
+                $cart->product_quantity = $request->quantity;
+                $cart->photo = $product->photo;
+                $cart->save();
+                $product->product_quantity = $product->product_quantity - $request->quantity;
+                $product->save();
+
+                return redirect()->route('showCart')->with(['type' => 'success', 'message' => 'Add to cart success']);
             }
 
-            $cart->product_quantity = $request->quantity;
-            $cart->photo = $product->photo;
-            $cart->save();
-            $product->product_quantity = $product->product_quantity - $request->quantity;
-            $product->save();
-
-            return redirect()->route('showCart')->with(['type' => 'success', 'message' => 'Add to cart success']);
 
 
         } else {

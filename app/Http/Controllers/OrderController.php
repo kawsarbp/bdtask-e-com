@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Illuminate\Http\Request;
@@ -114,6 +115,36 @@ class OrderController extends Controller
         });
 
         return redirect()->back()->with(['message'=>'Mail send success','type'=>'success']);
+
+    }
+    /*show orders*/
+    public function orders()
+    {
+        if(Auth::id())
+        {
+            $user = Auth::user();
+            $user_id = $user->id;
+            $orders = Order::where(['user_id'=>$user_id,'delivery_status'=>'Processing'])->get();
+
+            return view('home.order',compact('orders'));
+        }
+        else
+        {
+            return redirect()->route('login');
+        }
+    }
+    /*cancelOrder*/
+    public function cancelOrder($id)
+    {
+        $order = Order::find($id);
+        $product_quantity = $order->product_quantity;
+        $product_id = $order->product_id;
+        $product = Product::find($product_id);
+        
+        $product->product_quantity = $product->product_quantity + $product_quantity;
+        $product->save();
+        $order->delete();
+        return redirect()->back()->with(['type' => 'success', 'message' => 'Order remove success']);
 
     }
 
